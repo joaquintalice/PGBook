@@ -1,34 +1,28 @@
-﻿Console.Title = "The prototype";
+﻿Console.Title = "The Magic Cannon";
 
-Console.Write("User 1, enter a number between 0 and 100: ");
-int userOneNumber = Convert.ToInt32(Console.ReadLine());
-
-while (userOneNumber < 0 || userOneNumber > 100)
+for (int i = 1; i <= 100; i++)
 {
-    Console.Write("User 1, invalid number, please enter a number between 0 and 100: ");
-    userOneNumber = Convert.ToInt32(Console.ReadLine());
-}
-
-Console.Clear();
-
-Console.Write("User 2, guess the number: ");
-int userTwoNumber = Convert.ToInt32(Console.ReadLine());
-
-while (true)
-{
-    if (userTwoNumber > userOneNumber)
+    if (i % 3 == 0 && i % 5 == 0)
     {
-        Console.WriteLine($"{userTwoNumber} is too high.");
+        Console.BackgroundColor = ConsoleColor.Blue;
+        Console.WriteLine($"{i}: Super blast!");
     }
-    else if (userTwoNumber < userOneNumber)
+    else if (i % 3 == 0)
     {
-        Console.WriteLine($"{userTwoNumber} is too low.");
+        Console.BackgroundColor = ConsoleColor.Red;
+        Console.WriteLine($"{i}: Fire");
+    }
+    else if (i % 5 == 0)
+    {
+        Console.BackgroundColor = ConsoleColor.Yellow;
+        Console.ForegroundColor = ConsoleColor.Black;
+        Console.WriteLine($"{i}: Electric");
     }
     else
     {
-        Console.WriteLine($"{userTwoNumber} is correct! You guessed the number!");
-        break;
+        Console.WriteLine($"{i}: Normal");
     }
-    Console.Write("User 2, what is your next guess?: ");
-    userTwoNumber = Convert.ToInt32(Console.ReadLine());
+
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.BackgroundColor = ConsoleColor.Black;
 }
