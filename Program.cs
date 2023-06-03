@@ -1,28 +1,36 @@
 ﻿Console.Title = "The Magic Cannon";
 
-for (int i = 1; i <= 100; i++)
-{
-    if (i % 3 == 0 && i % 5 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"{i}: Super blast!");
-    }
-    else if (i % 3 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Red;
-        Console.WriteLine($"{i}: Fire");
-    }
-    else if (i % 5 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Yellow;
-        Console.ForegroundColor = ConsoleColor.Black;
-        Console.WriteLine($"{i}: Electric");
-    }
-    else
-    {
-        Console.WriteLine($"{i}: Normal");
-    }
+Console.Write("What number do you want to the length of the array?: ");
+int agesLength = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("*******************");
+int[] ages = new int[agesLength];
 
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.BackgroundColor = ConsoleColor.Black;
+for (int i = 0; i < ages.Length; i++)
+{
+    Console.Write("What number do you want to store in the array?: ");
+    int num = Convert.ToInt32(Console.ReadLine());
+    ages[i] = num;
+    Console.WriteLine($"{num} was stored successfully in the array");
+}
+Console.WriteLine("*******************");
+Console.WriteLine("Inverted ages final result: ");
+
+for (int i = 0; i < ages.Length ;i++)
+{
+    Console.Write($"{ages[^(i+1)]}, ");
+}
+
+Console.WriteLine("");
+Console.WriteLine("*******************");
+int[] range = ages[0..3];
+Console.WriteLine("Range 0 to 3");
+for (int i = 0; i < range.Length; i++)
+{
+    Console.WriteLine($"{range[i]}");
+}
+Console.WriteLine("*******************");
+Console.WriteLine("Ages range reverted");
+for (int i = 0; i < range.Length; i++)
+{
+    Console.WriteLine($"{range[^(i+1)]}");
 }
