@@ -1,28 +1,17 @@
 ﻿Console.Title = "The Magic Cannon";
 
-for (int i = 1; i <= 100; i++)
+Console.Write("How high should I count?");
+int chosenNumber = ReadNumber();
+Count(chosenNumber);
+void Count(int numberToCountTo)
 {
-    if (i % 3 == 0 && i % 5 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"{i}: Super blast!");
-    }
-    else if (i % 3 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Red;
-        Console.WriteLine($"{i}: Fire");
-    }
-    else if (i % 5 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Yellow;
-        Console.ForegroundColor = ConsoleColor.Black;
-        Console.WriteLine($"{i}: Electric");
-    }
-    else
-    {
-        Console.WriteLine($"{i}: Normal");
-    }
-
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.BackgroundColor = ConsoleColor.Black;
+    for (int current = 1; current <= numberToCountTo; current++)
+        Console.WriteLine(current);
 }
+int ReadNumber()
+{
+    string input = Console.ReadLine();
+    int number = Convert.ToInt32(input);
+    return number;
+};
+
