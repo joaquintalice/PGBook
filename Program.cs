@@ -1,28 +1,37 @@
-﻿Console.Title = "The Magic Cannon";
+﻿Console.Title = "The Laws of Freach";
 
-for (int i = 1; i <= 100; i++)
+int[,] matriz = new int[3, 10];
+
+for (int i = 0; i < matriz.GetLength(0); i++)
 {
-    if (i % 3 == 0 && i % 5 == 0)
+    for (int j = 0; j < matriz.GetLength(1); j++)
     {
-        Console.BackgroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"{i}: Super blast!");
+        Console.Write($"Ingrese el valor para la matriz [{i}, {j}]: ");
+        int value = Convert.ToInt32(Console.ReadLine());
+        matriz[i, j] = value;
+        
     }
-    else if (i % 3 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Red;
-        Console.WriteLine($"{i}: Fire");
-    }
-    else if (i % 5 == 0)
-    {
-        Console.BackgroundColor = ConsoleColor.Yellow;
-        Console.ForegroundColor = ConsoleColor.Black;
-        Console.WriteLine($"{i}: Electric");
-    }
-    else
-    {
-        Console.WriteLine($"{i}: Normal");
-    }
+    Console.WriteLine();
+}
 
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.BackgroundColor = ConsoleColor.Black;
+for (int i = 0; i < matriz.GetLength(0); i++)
+{
+    for (int j = 0; j < matriz.GetLength(1); j++)
+    {
+        Console.Write(matriz[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+
+int[] result = new int[10];
+for (int i = 0; i < matriz.GetLength(0); i++)
+{
+    result[i] = 0;
+    for (int j = 0; j < matriz.GetLength(1); j++)
+    {
+        result[i] += matriz[i, j];
+    }
+    Console.Write($"Suma de la fila {i}: ");
+    Console.Write(result[i] + " ");
+    Console.WriteLine();
 }
