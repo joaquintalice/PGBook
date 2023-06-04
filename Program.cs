@@ -1,13 +1,26 @@
-﻿string GetUserName()
+﻿
+int AskForNumber(string text)
 {
-    while (true)
-    {
-        Console.Write("What is your name? ");
-        string name = Console.ReadLine();
-        if (name != "") // Empty string
-            return name;
-        Console.WriteLine("Let's try that again.");
-    }
+    Console.WriteLine(text);
+    int result = Convert.ToInt32(Console.ReadLine());
+    return result;
 }
 
-GetUserName();
+AskForNumber("What's the max seed of a Tesla Plaid?");
+
+int AskForNumberInRange(string text, int min, int
+    max)
+{
+    Console.WriteLine(text);
+    int number = Convert.ToInt32(Console.ReadLine());
+    while (number < min || number > max)
+    {
+        Console.WriteLine(text);
+        number = Convert.ToInt32(Console.ReadLine());
+    }
+    return number;
+}
+
+AskForNumberInRange("Write a number between 0 and 30", 0, 30);
+
+
