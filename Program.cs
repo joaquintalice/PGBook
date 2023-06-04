@@ -1,17 +1,13 @@
-﻿Console.Title = "The Magic Cannon";
-
-Console.Write("How high should I count?");
-int chosenNumber = ReadNumber();
-Count(chosenNumber);
-void Count(int numberToCountTo)
+﻿string GetUserName()
 {
-    for (int current = 1; current <= numberToCountTo; current++)
-        Console.WriteLine(current);
+    while (true)
+    {
+        Console.Write("What is your name? ");
+        string name = Console.ReadLine();
+        if (name != "") // Empty string
+            return name;
+        Console.WriteLine("Let's try that again.");
+    }
 }
-int ReadNumber()
-{
-    string input = Console.ReadLine();
-    int number = Convert.ToInt32(input);
-    return number;
-};
 
+GetUserName();
