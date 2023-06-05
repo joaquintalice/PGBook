@@ -1,4 +1,4 @@
-﻿Console.Title = "The Laws of Freach";
+Console.Title = "The Laws of Freach";
 
 int[,] matriz = new int[3, 10];
 
