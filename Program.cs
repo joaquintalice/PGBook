@@ -1,114 +1,95 @@
 
-Console.WriteLine($"Which type of food do you want? Choose a num of the menu.");
-Console.WriteLine($"1: {FoodType.Soup}");
-Console.WriteLine($"2: {FoodType.Stew}");
-Console.WriteLine($"3: {FoodType.Gumbo}");
-Console.Write("Your choose: ");
-int orderNum = Convert.ToInt32(Console.ReadLine());
-FoodType typeOrder;
-while (orderNum < 1 || orderNum > 3)
-{
-    Console.Write($"This type isn't in the list. Choose another: ");
-    orderNum = Convert.ToInt32(Console.ReadLine());
-}
+Arrow arrow = getArrow();
+Console.WriteLine($"The total cost of your arrow is {arrow.GetCost()}");
 
-if (orderNum == 1)
+Arrow getArrow()
 {
-    typeOrder = FoodType.Soup;
-}
-else if (orderNum == 2)
-{
-    typeOrder = FoodType.Stew;
-}
-else
-{
-    typeOrder = FoodType.Gumbo;
-}
+    Arrowhead arrowhead = GetArrowType();
+    Fletching fletching = GetFletchingType();
+    float length = GetLength();
 
-Console.WriteLine($"Which ingredient do you want to your {typeOrder}? Choose a num from the menu");
-Console.WriteLine($"1: {MainIngredient.Mushrooms}");
-Console.WriteLine($"2: {MainIngredient.Chicken}");
-Console.WriteLine($"3: {MainIngredient.Carrots}");
-Console.WriteLine($"4: {MainIngredient.Potatoes}");
-Console.Write("Your choose: ");
-int ingredientNum = Convert.ToInt32(Console.ReadLine());
-MainIngredient ingredientOrder;
-
-while (ingredientNum < 1 || ingredientNum > 4)
-{
-    Console.Write($"This ingredient isn't in the list. Choose another: ");
-    ingredientNum = Convert.ToInt32(Console.ReadLine());
-}
-
-if (ingredientNum == 1)
-{
-    ingredientOrder = MainIngredient.Mushrooms;
-}
-else if (ingredientNum == 2)
-{
-    ingredientOrder = MainIngredient.Chicken;
-}
-else if (ingredientNum == 3)
-{
-    ingredientOrder = MainIngredient.Carrots;
-}
-else
-{
-    ingredientOrder = MainIngredient.Potatoes;
+    return new Arrow(arrowhead, fletching, length);
 }
 
 
-Console.WriteLine($"Which type of seasoning do you want? Choose a num of the menu.");
-Console.WriteLine($"1: {Seasoning.Spicy}");
-Console.WriteLine($"2: {Seasoning.Salty}");
-Console.WriteLine($"3: {Seasoning.Sweet}");
-Console.Write("Your choose: ");
-int seasoningNum = Convert.ToInt32(Console.ReadLine());
-Seasoning seasoningOrder;
-
-while (seasoningNum < 1 || seasoningNum > 3)
+Fletching GetFletchingType()
 {
-    Console.Write($"This type of seasoning isn't in the list. Choose another: ");
-    seasoningNum = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("Which fletching do you want?");
+    Console.WriteLine("(plastic, turkey feathers, goose feathers)");
+    string input = Console.ReadLine();
+    return input switch
+    {
+        "plastic" => Fletching.Plastic,
+        "turkey feathers" => Fletching.TurkeyFeathers,
+        "goose feathers" => Fletching.GooseFeathers
+    };
 }
 
-if (seasoningNum == 1)
+Arrowhead GetArrowType()
 {
-    seasoningOrder = Seasoning.Spicy;
-}
-else if (seasoningNum == 2)
-{
-    seasoningOrder = Seasoning.Salty;
-}
-else
-{
-    seasoningOrder = Seasoning.Sweet;
-}
+    Console.WriteLine("Which arrowhead do you want?");
+    Console.WriteLine("(steel, wood, obsidian)");
+    string input = Console.ReadLine();
 
-(Seasoning, MainIngredient, FoodType) Soup = (seasoningOrder, ingredientOrder, typeOrder);
-
-Console.WriteLine($"Your {Soup} is ready. Enjoy it!");
-
-
-
-enum FoodType
-{
-    Soup,
-    Stew,
-    Gumbo
-};
-
-enum MainIngredient
-{
-    Mushrooms,
-    Chicken,
-    Carrots,
-    Potatoes
+    return input switch
+    {
+        "steel" => Arrowhead.Steel,
+        "wood" => Arrowhead.Wood,
+        "obsidian" => Arrowhead.Obsidian
+    };
 }
 
-enum Seasoning
+
+
+float GetLength()
 {
-    Spicy,
-    Salty,
-    Sweet
+    float length = 0;
+
+    while (length < 60 && length > 100)
+    {
+        Console.WriteLine("Which length do you want? Choose between 60 and 100");
+        length = Convert.ToSingle(Console.ReadLine());
+    }
+    return length;
 }
+
+class Arrow
+{
+    private Arrowhead _arrowhead;
+    private Fletching _fletching;
+    private float _length;
+
+    public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
+    {
+        _arrowhead = arrowhead;
+        _fletching = fletching;
+        _length = length;
+    }
+
+    public float GetCost()
+    {
+        float arrowheadCost = _arrowhead switch
+        {
+            Arrowhead.Steel => 10,
+            Arrowhead.Wood => 3,
+            Arrowhead.Obsidian => 5
+        };
+
+        float fletchingCost = _fletching switch
+        {
+            Fletching.Plastic => 10,
+            Fletching.TurkeyFeathers => 5,
+            Fletching.GooseFeathers => 3
+        };
+
+        float shaftCost = 0.05f * _length;
+
+        return arrowheadCost + fletchingCost + shaftCost;
+    }
+
+}
+
+
+
+enum Arrowhead { Steel, Wood, Obsidian }
+enum Fletching { Plastic, TurkeyFeathers, GooseFeathers }
