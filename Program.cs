@@ -1,95 +1,33 @@
 
-Arrow arrow = getArrow();
-Console.WriteLine($"The total cost of your arrow is {arrow.GetCost()}");
+Rectangle rectangle = new Rectangle(2, 3);
+rectangle.SetWidth(5);
+rectangle.SetHeight(5);
+Console.WriteLine(rectangle.GetArea());
 
-Arrow getArrow()
+
+class Rectangle
 {
-    Arrowhead arrowhead = GetArrowType();
-    Fletching fletching = GetFletchingType();
-    float length = GetLength();
+    private float _width;
+    private float _height;
+    private float _area;
 
-    return new Arrow(arrowhead, fletching, length);
-}
-
-
-Fletching GetFletchingType()
-{
-    Console.WriteLine("Which fletching do you want?");
-    Console.WriteLine("(plastic, turkey feathers, goose feathers)");
-    string input = Console.ReadLine();
-    return input switch
+    public Rectangle(float width, float height)
     {
-        "plastic" => Fletching.Plastic,
-        "turkey feathers" => Fletching.TurkeyFeathers,
-        "goose feathers" => Fletching.GooseFeathers
-    };
-}
-
-Arrowhead GetArrowType()
-{
-    Console.WriteLine("Which arrowhead do you want?");
-    Console.WriteLine("(steel, wood, obsidian)");
-    string input = Console.ReadLine();
-
-    return input switch
-    {
-        "steel" => Arrowhead.Steel,
-        "wood" => Arrowhead.Wood,
-        "obsidian" => Arrowhead.Obsidian
-    };
-}
-
-
-
-float GetLength()
-{
-    float length = 0;
-
-    while (length < 60 && length > 100)
-    {
-        Console.WriteLine("Which length do you want? Choose between 60 and 100");
-        length = Convert.ToSingle(Console.ReadLine());
+        _width = width;
+        _height = height;
+        _area = _width * _height;
     }
-    return length;
-}
-
-class Arrow
-{
-    private Arrowhead _arrowhead;
-    private Fletching _fletching;
-    private float _length;
-
-    public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
+    public float GetWidth() => _width;
+    public float GetHeight() => _height;
+    public float GetArea() => _area;
+    public void SetWidth(float value)
     {
-        _arrowhead = arrowhead;
-        _fletching = fletching;
-        _length = length;
+        _width = value;
+        _area = _width * _height;
     }
-
-    public float GetCost()
+    public void SetHeight(float value)
     {
-        float arrowheadCost = _arrowhead switch
-        {
-            Arrowhead.Steel => 10,
-            Arrowhead.Wood => 3,
-            Arrowhead.Obsidian => 5
-        };
-
-        float fletchingCost = _fletching switch
-        {
-            Fletching.Plastic => 10,
-            Fletching.TurkeyFeathers => 5,
-            Fletching.GooseFeathers => 3
-        };
-
-        float shaftCost = 0.05f * _length;
-
-        return arrowheadCost + fletchingCost + shaftCost;
+        _height = value;
+        _area = _width * _height;
     }
-
 }
-
-
-
-enum Arrowhead { Steel, Wood, Obsidian }
-enum Fletching { Plastic, TurkeyFeathers, GooseFeathers }
