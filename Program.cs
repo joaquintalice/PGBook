@@ -4,13 +4,49 @@ Console.WriteLine($"The total cost of your arrow is {arrow.Cost}");
 
 Arrow getArrow()
 {
-    Arrowhead arrowhead = GetArrowType();
-    Fletching fletching = GetFletchingType();
-    float length = GetLength();
+    Console.WriteLine("Do you want to create a custom arrow? (y/n): ");
+    string input = Console.ReadLine();
+    while (input != "y" && input != "n")
+    {
+        Console.WriteLine("Do you want to create a custom arrow? (y/n): ");
+        input = Console.ReadLine();
+    }
+    if (input == "y")
+    {
+        return getCustomArrow();
+    }
+    else
+    {
+        Arrowhead arrowhead = GetArrowType();
+        Fletching fletching = GetFletchingType();
+        float length = GetLength();
 
-    return new Arrow(arrowhead, fletching, length);
+        return new Arrow(arrowhead, fletching, length);
+    }
+        
 }
 
+Arrow getCustomArrow()
+{
+    Console.WriteLine("Which custom arrow do you want to choose?");
+    Console.WriteLine("1: \"The Elite Arrow\"");
+    Console.WriteLine("2: \"The Beginner Arrow\"");
+    Console.WriteLine("3: \"The Marksman Arrow\"");
+    Console.Write("Your choose: ");
+    int input = Convert.ToInt32(Console.ReadLine());
+
+    if (input == 1)
+    {
+        return Arrow.CreateEliteArrow();
+    } 
+    else if (input == 2)
+    {
+        return Arrow.CreateEliteArrow();
+    }
+    else {
+        return Arrow.CreateMarksmanArrow();
+    }
+}
 
 Fletching GetFletchingType()
 {
@@ -64,6 +100,33 @@ class Arrow
         Arrowhead = arrowhead;
         Fletching = fletching;
         Length = length;
+    }
+
+    public static Arrow CreateEliteArrow()
+    {
+        Arrowhead Arrowhead = Arrowhead.Steel;
+        Fletching Fletching = Fletching.Plastic;
+        float Length = 95;
+
+        return new Arrow(Arrowhead, Fletching, Length);
+    }
+
+    public static Arrow CreateBeginnerArrow()
+    {
+        Arrowhead Arrowhead = Arrowhead.Wood;
+        Fletching Fletching = Fletching.GooseFeathers;
+        float Length = 75;
+
+        return new Arrow(Arrowhead, Fletching, Length);
+    }
+
+    public static Arrow CreateMarksmanArrow()
+    {
+        Arrowhead Arrowhead = Arrowhead.Steel;
+        Fletching Fletching = Fletching.GooseFeathers;
+        float Length = 65;
+
+        return new Arrow(Arrowhead, Fletching, Length);
     }
 
     public float Cost
