@@ -41,7 +41,7 @@ Arrow getCustomArrow()
     } 
     else if (input == 2)
     {
-        return Arrow.CreateEliteArrow();
+        return Arrow.CreateBeginnerArrow();
     }
     else {
         return Arrow.CreateMarksmanArrow();
