@@ -1,34 +1,61 @@
-Point.Main();
-
-Point newPoint = new Point();
-Console.WriteLine(newPoint.X);
-Console.WriteLine(newPoint.Y);
-
-Point secondPoint = new Point(13, 43);
-Console.WriteLine(secondPoint.X);
-Console.WriteLine(secondPoint.Y);
-
-
-class Point
+Color.Main();
+class Color
 {
-    public int X { get; private set; } = 0;
-    public int Y { get; private set; } = 0;
+    public int R { get; private set; }
+    public int G { get; private set; }
+    public int B { get; private set; }
 
-    public Point(int x, int y)
+    public Color(int r, int g, int b)
     {
-        X = x;
-        Y = y;
+        R = r;
+        G = g;
+        B = b;
     }
 
-    public Point(){}
+    public static Color White
+    {
+        get { return new Color(255, 255, 255); }
+    }
+
+    public static Color Black
+    {
+        get { return new Color(0, 0, 0); }
+    }
+
+    public static Color Red
+    {
+        get { return new Color(255, 0, 0); }
+    }
+
+    public static Color Orange
+    {
+        get { return new Color(255, 165, 0); }
+    }
+
+    public static Color Yellow
+    {
+        get { return new Color(255, 255, 0); }
+    }
+
+    public static Color Green
+    {
+        get { return new Color(0, 128, 0); }
+    }
+
+    public static Color Blue
+    {
+        get { return new Color(0, 0, 255); }
+    }
+
+    public static Color Purple
+    {
+        get { return new Color(128, 0, 128); }
+    }
 
     public static void Main()
     {
-        Point one = new Point(2, 3);
-        Point two = new Point(-4, 0);
-
-        Console.WriteLine($"Coords of point one ({one.X}, {one.Y})");
-        Console.WriteLine($"Coords of point two ({two.X}, {two.Y})");
+        Color Pink = new Color(255, 182,193);
+        Console.WriteLine($"The RGB code of the color Pink is R:{Pink.R} G:{Pink.G} B:{Pink.B}");
+        Console.WriteLine($"The RBG code of the color Yellow is R:{Color.Yellow.R} G:{Color.Yellow.G} B:{Color.Yellow.B}");
     }
-
 }
