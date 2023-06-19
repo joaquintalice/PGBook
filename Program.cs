@@ -1,61 +1,58 @@
-Color.Main();
-class Color
+Color[] colors = new Color[] {Color.Red, Color.Green, Color.Blue, Color.Yellow};
+Rank[] ranks = new Rank[] {Rank.One, Rank.Two, Rank.Three, Rank.Four, Rank.Five, Rank.Six, Rank.Seven, Rank.Eight, Rank.Nine, Rank.Ten, Rank.DollarSign, Rank.Percent, Rank.Caret, Rank.Ampersand};
+
+foreach (Color color in colors)
 {
-    public int R { get; private set; }
-    public int G { get; private set; }
-    public int B { get; private set; }
-
-    public Color(int r, int g, int b)
+    foreach (Rank rank in ranks)
     {
-        R = r;
-        G = g;
-        B = b;
-    }
-
-    public static Color White
-    {
-        get { return new Color(255, 255, 255); }
-    }
-
-    public static Color Black
-    {
-        get { return new Color(0, 0, 0); }
-    }
-
-    public static Color Red
-    {
-        get { return new Color(255, 0, 0); }
-    }
-
-    public static Color Orange
-    {
-        get { return new Color(255, 165, 0); }
-    }
-
-    public static Color Yellow
-    {
-        get { return new Color(255, 255, 0); }
-    }
-
-    public static Color Green
-    {
-        get { return new Color(0, 128, 0); }
-    }
-
-    public static Color Blue
-    {
-        get { return new Color(0, 0, 255); }
-    }
-
-    public static Color Purple
-    {
-        get { return new Color(128, 0, 128); }
-    }
-
-    public static void Main()
-    {
-        Color Pink = new Color(255, 182,193);
-        Console.WriteLine($"The RGB code of the color Pink is R:{Pink.R} G:{Pink.G} B:{Pink.B}");
-        Console.WriteLine($"The RBG code of the color Yellow is R:{Color.Yellow.R} G:{Color.Yellow.G} B:{Color.Yellow.B}");
+        Card card = new Card(color, rank);
+        Console.WriteLine($"The {card.Color} {card.Rank}");
     }
 }
+
+public class Card
+{
+    public Color Color { get; set; }
+    public Rank Rank { get; set; }
+
+    public Card(Color color, Rank rank)
+    {
+        Color = color;
+        Rank = rank;
+    }
+
+    public bool IsSymbol => Rank == Rank.Ampersand || Rank == Rank.Caret || Rank == Rank.DollarSign || Rank == Rank.Percent; // Expression property with get only
+    public bool IsNumber => !IsSymbol; // Same here
+
+}
+
+
+
+
+
+public enum Color
+{
+    Red,
+    Green,
+    Blue,
+    Yellow
+}
+
+public enum Rank
+{
+    One,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+    Nine,
+    Ten,
+    DollarSign, 
+    Percent, 
+    Caret, 
+    Ampersand
+}
+
