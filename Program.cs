@@ -1,60 +1,75 @@
-PasswordValidator validator = new PasswordValidator();
+int initialPasscode = GetInt("What is the initial passcode?");
+Door door = new Door(initialPasscode);
 
 while (true)
 {
-    Console.Write("Enter a password: ");
-    string? password = Console.ReadLine();
+    Console.Write($"The door is {door.State}. What do you want to do? (open, close, lock, unlock, change code) ");
+    string? command = Console.ReadLine();
 
-    if (password == null) break; 
-
-    if (validator.IsValid(password)) Console.WriteLine("That password is valid.");
-    else Console.WriteLine("That password is not valid.");
+    switch (command)
+    {
+        case "open":
+            door.Open();
+            break;
+        case "close":
+            door.Close();
+            break;
+        case "lock":
+            door.Lock();
+            break;
+        case "unlock":
+            int guess = GetInt("What is the passcode?");
+            door.Unlock(guess);
+            break;
+        case "change code":
+            int currentCode = GetInt("What is the current passcode?");
+            int newCode = GetInt("What do you want to change it to?");
+            door.ChangeCode(currentCode, newCode);
+            break;
+    }
 }
 
-public class PasswordValidator
+int GetInt(string text)
 {
-    public bool IsValid(string password)
-    {
-        if (password.Length < 6) return false;
-        if (password.Length > 13) return false;
-        if (!HasUppercase(password)) return false;
-        if (!HasLowercase(password)) return false;
-        if (!HasDigits(password)) return false;
-        if (Contains(password, 'T')) return false;
-        if (Contains(password, '&')) return false;
+    Console.Write(text + " ");
+    return Convert.ToInt32(Console.ReadLine());
+}
 
-        return true;
+public class Door
+{
+    private int _passcode;
+    public DoorState State { get; private set; }
+
+    public Door(int initialPasscode)
+    {
+        _passcode = initialPasscode;
+        State = DoorState.Closed;
     }
 
-    private bool HasUppercase(string password)
+    public void Close()
     {
-        foreach (char letter in password)
-            if (char.IsUpper(letter)) return true;
-
-        return false;
+        if (State == DoorState.Open) State = DoorState.Closed;
     }
 
-    private bool HasLowercase(string password)
+    public void Open()
     {
-        foreach (char letter in password)
-            if (char.IsLower(letter)) return true;
-
-        return false;
+        if (State == DoorState.Closed) State = DoorState.Open;
     }
 
-    private bool HasDigits(string password)
+    public void Lock()
     {
-        foreach (char letter in password)
-            if (char.IsDigit(letter)) return true;
-
-        return false;
+        if (State == DoorState.Closed) State = DoorState.Locked;
     }
 
-    private bool Contains(string password, char letter)
+    public void Unlock(int passcode)
     {
-        foreach (char character in password)
-            if (character == letter) return true;
+        if (State == DoorState.Locked && passcode == _passcode) State = DoorState.Closed;
+    }
 
-        return false;
+    public void ChangeCode(int oldPasscode, int newPasscode)
+    {
+        if (oldPasscode == _passcode) _passcode = newPasscode;
     }
 }
+
+public enum DoorState { Open, Closed, Locked }
