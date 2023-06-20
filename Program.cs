@@ -1,58 +1,134 @@
-Color[] colors = new Color[] {Color.Red, Color.Green, Color.Blue, Color.Yellow};
-Rank[] ranks = new Rank[] {Rank.One, Rank.Two, Rank.Three, Rank.Four, Rank.Five, Rank.Six, Rank.Seven, Rank.Eight, Rank.Nine, Rank.Ten, Rank.DollarSign, Rank.Percent, Rank.Caret, Rank.Ampersand};
+using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
-foreach (Color color in colors)
+Door.Main();
+
+public class Door
 {
-    foreach (Rank rank in ranks)
-    {
-        Card card = new Card(color, rank);
-        Console.WriteLine($"The {card.Color} {card.Rank}");
-    }
-}
+    public Status CurrentStatus { get; set; }
+    public int Passcode { get; set; }
 
-public class Card
-{
-    public Color Color { get; set; }
-    public Rank Rank { get; set; }
-
-    public Card(Color color, Rank rank)
+    public Door(Status status, int passcode)
     {
-        Color = color;
-        Rank = rank;
+        CurrentStatus = status;
+        Passcode = passcode;
     }
 
-    public bool IsSymbol => Rank == Rank.Ampersand || Rank == Rank.Caret || Rank == Rank.DollarSign || Rank == Rank.Percent; // Expression property with get only
-    public bool IsNumber => !IsSymbol; // Same here
+    public void OpenDoor()
+    {
+        if (CurrentStatus == Status.Close)
+        {
+            CurrentStatus = Status.Open;
+        }
+    }
+    public void CloseDoor()
+    {
+        if (CurrentStatus == Status.Open)
+        {
+            CurrentStatus = Status.Close;
+        }
+    }
+    public void LockDoor()
+    {
+        if (CurrentStatus == Status.Close)
+        {
+            CurrentStatus = Status.Lock;
+        }
+    }
+    public void UnlockDoor()
+    {
+        if (CurrentStatus == Status.Lock)
+        {
+            Console.Write("Write the passcode to unlock: ");
+            int input = Convert.ToInt32(Console.ReadLine());
+            if (input == Passcode)
+            {
+                CurrentStatus = Status.Unlock;
+            }
+            else
+            {
+                Console.WriteLine("Invalid passcode, the door still locked");
+            }
+        }
+    }
+    public void ChangePasscode()
+    {
+        Console.Write("Insert the current passcode: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+
+        if (input == Passcode)
+        {
+            Console.Write("Put the new passcode: ");
+            int newPasscode = Convert.ToInt32(Console.ReadLine());
+            Passcode = newPasscode;
+        }
+        else
+        {
+            while (true)
+            {
+                Console.Write("Passcode incorrect. Do you want try again? (y/n): ");
+                string condition = Console.ReadLine();
+                if (condition == "y")
+                {
+                    ChangePasscode();
+                    break;
+                }
+                else if (condition == "n")
+                {
+                    break;
+                }
+            }
+
+        }
+
+    }
+    public static void Main()
+    {
+        Console.WriteLine("Insert the passcode(number) and status(open, close, lock, unlock) to your new Door");
+        Console.Write("Passcode: ");
+        int inputPasscode = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Status: ");
+        string inputStatus = Console.ReadLine();
+        Status initialStatus = inputStatus switch
+        {
+            "open" => Status.Open,
+            "close" => Status.Close,
+            "lock" => Status.Lock,
+            "unlock" => Status.Unlock,
+        };
+
+        Door door = new Door(initialStatus, inputPasscode);
+
+        while (true)
+        {
+            Console.WriteLine("Which action do you want?");
+            Console.WriteLine($"Door current status: {door.CurrentStatus}");
+            Console.WriteLine("1: Open the door");
+            Console.WriteLine("2: Close the door");
+            Console.WriteLine("3: Lock the door");
+            Console.WriteLine("4: Unlock the door");
+            Console.Write("Your decision: ");
+            int input = Convert.ToInt32(Console.ReadLine());
+
+            switch (input)
+            {
+                case 1:
+                    door.OpenDoor();
+                    break;
+                case 2:
+                    door.CloseDoor();
+                    break;
+                case 3:
+                    door.LockDoor();
+                    break;
+                case 4:
+                    door.UnlockDoor();
+                    break;
+            }
+
+            
+        }
+    }
 
 }
-
-
-
-
-
-public enum Color
-{
-    Red,
-    Green,
-    Blue,
-    Yellow
-}
-
-public enum Rank
-{
-    One,
-    Two,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten,
-    DollarSign, 
-    Percent, 
-    Caret, 
-    Ampersand
-}
-
+public enum Status { Open, Close, Lock, Unlock }
