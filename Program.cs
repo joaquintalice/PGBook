@@ -1,60 +1,60 @@
+PasswordValidator validator = new PasswordValidator();
 
-PasswordValidator.Validate();
-
-class PasswordValidator
+while (true)
 {
-    public string Password { get; set; }
+    Console.Write("Enter a password: ");
+    string? password = Console.ReadLine();
 
-    public PasswordValidator(string password)
+    if (password == null) break; 
+
+    if (validator.IsValid(password)) Console.WriteLine("That password is valid.");
+    else Console.WriteLine("That password is not valid.");
+}
+
+public class PasswordValidator
+{
+    public bool IsValid(string password)
     {
-        Password = password;
+        if (password.Length < 6) return false;
+        if (password.Length > 13) return false;
+        if (!HasUppercase(password)) return false;
+        if (!HasLowercase(password)) return false;
+        if (!HasDigits(password)) return false;
+        if (Contains(password, 'T')) return false;
+        if (Contains(password, '&')) return false;
+
+        return true;
     }
 
-    public static void Validate()
+    private bool HasUppercase(string password)
     {
-        while (true)
-        {
-            Console.Write("Write a new password: ");
-            string passwordInput = Console.ReadLine();
-            PasswordValidator pw = new PasswordValidator(passwordInput);
+        foreach (char letter in password)
+            if (char.IsUpper(letter)) return true;
 
-            bool rule1 = passwordInput.Length >= 6 && passwordInput.Length <= 13;
-            bool ruleTwo = true; 
-            bool letterT = false;
-            bool digitAmpersand = false;
+        return false;
+    }
 
-            foreach (char character in passwordInput)
-            {
-                bool upperChar = char.IsUpper(character);
-                bool lowerChar = char.IsLower(character);
-                bool digitChar = char.IsDigit(character);
-                bool symbolChar = char.IsSymbol(character);
+    private bool HasLowercase(string password)
+    {
+        foreach (char letter in password)
+            if (char.IsLower(letter)) return true;
 
+        return false;
+    }
 
-                if (!(upperChar || lowerChar || digitChar || symbolChar))
-                {
-                    ruleTwo = false;
-                }
+    private bool HasDigits(string password)
+    {
+        foreach (char letter in password)
+            if (char.IsDigit(letter)) return true;
 
-                if (character == 'T')
-                {
-                    letterT = true;
-                }
+        return false;
+    }
 
-                if (character == '&')
-                {
-                    digitAmpersand = true;
-                }
-            }
+    private bool Contains(string password, char letter)
+    {
+        foreach (char character in password)
+            if (character == letter) return true;
 
-            if (rule1 && ruleTwo && !letterT && !digitAmpersand)
-            {
-                Console.WriteLine("The password meets all the rules. Password allowed.");
-            }
-            else
-            {
-                Console.WriteLine("The password doesn't meets all the rules. Password not allowed.");
-            }
-        }
+        return false;
     }
 }
